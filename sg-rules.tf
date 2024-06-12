@@ -166,3 +166,13 @@ resource "aws_security_group_rule" "web_app_alb-bastion" {
   source_security_group_id = module.sg-made-easy-bastion.sg_id
   security_group_id        = module.sg-made-easy-web_app_alb.sg_id
 }
+
+### Jenkins Connect to Instances
+resource "aws_security_group_rule" "allow_default_vpc" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["172.31.0.0/16"]
+  security_group_id = module.sg-made-easy-web_app_alb.sg_id
+}

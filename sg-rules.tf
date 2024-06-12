@@ -168,11 +168,20 @@ resource "aws_security_group_rule" "web_app_alb-bastion" {
 }
 
 ### Jenkins Connect to Instances
-resource "aws_security_group_rule" "allow_default_vpc" {
+resource "aws_security_group_rule" "be-allow_default_vpc" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 22
+  to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["172.31.0.0/16"]
-  security_group_id = module.sg-made-easy-web_app_alb.sg_id
+  security_group_id = module.sg-made-easy-be.sg_id
+}
+
+resource "aws_security_group_rule" "fe-allow_default_vpc" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["172.31.0.0/16"]
+  security_group_id = module.sg-made-easy-fe.sg_id
 }
